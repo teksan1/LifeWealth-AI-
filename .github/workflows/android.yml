@@ -1,8 +1,11 @@
-name: Build & Publish APK
+name: Build APK and Release
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -12,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Set up Java 17
+    - name: Setup Java 17
       uses: actions/setup-java@v4
       with:
         distribution: temurin
@@ -21,22 +24,27 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Grant permissions
+    - name: Make Gradle executable
       run: chmod +x gradlew
 
     - name: Build APK
       run: ./gradlew assembleDebug
 
-    - name: Rename APK
-      run: |
-        mkdir -p release
-        cp app/build/outputs/apk/debug/app-debug.apk release/LifeWealth-AI.apk
+    - name: Check APK exists
+      run: ls -R app/build/outputs/apk || true
 
-    - name: Upload to GitHub Release
+    - name: Create Release Tag
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git tag v1.0.${{ github.run_number }}
+        git push origin v1.0.${{ github.run_number }}
+
+    - name: Upload Release APK
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.0
-        name: LifeWealth-AI v1.0.0
-        files: release/LifeWealth-AI.apk
+        tag_name: v1.0.${{ github.run_number }}
+        name: LifeWealth AI Build ${{ github.run_number }}
+        files: app/build/outputs/apk/debug/app-debug.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
