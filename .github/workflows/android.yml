@@ -1,4 +1,4 @@
-name: LifeWealth-AI Build
+name: LifeWealth AI Production Build
 
 on:
   push:
@@ -11,8 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
@@ -20,14 +19,11 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant permissions
-        run: chmod +x gradlew
-
-      - name: Clean project
+      - name: Clean Gradle
         run: ./gradlew clean
 
-      - name: Build APK (GitHub only)
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Build Release APK
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

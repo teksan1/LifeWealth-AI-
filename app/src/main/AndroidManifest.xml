@@ -1,19 +1,20 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lifewealthai.app">
 
-<application
-    android:label="LifeWealth AI">
+    <application
+        android:label="LifeWealth AI"
+        android:allowBackup="true">
 
-    <activity
-        android:name=".MainActivity"
-        android:exported="true">
+        <activity android:name=".MainActivity"
+            android:exported="true">
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
-    </activity>
+        </activity>
 
-</application>
+    </application>
 
 </manifest>
