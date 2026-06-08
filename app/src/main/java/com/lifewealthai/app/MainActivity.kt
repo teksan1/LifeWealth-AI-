@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,9 +13,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
-                Column(modifier = Modifier.padding(20.dp)) {
-                    Text("LifeWealth AI")
-                    Text("Finance system initializing...")
+                Surface {
+                    Column {
+                        Text("LifeWealth AI - Phase 2")
+                        Text("Finance Engine Initializing...")
+                    }
                 }
             }
         }
