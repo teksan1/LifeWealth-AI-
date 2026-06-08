@@ -28,9 +28,20 @@ class FinanceEngine {
 
     fun getAll(): List<Transaction> = transactions
 
-    // AI placeholder (future upgrade point)
-    fun predictNextMonth(): Double {
-        val avg = transactions.takeLast(10).sumOf { it.amount } / 10.0
-        return if (avg.isNaN()) 0.0 else avg * 30
+    // AI forecasting (basic predictive model)
+    fun predictNextWeek(): Double {
+        if (transactions.isEmpty()) return 0.0
+
+        val avg = transactions.takeLast(10).map { it.amount }.average()
+        return avg * 7
+    }
+
+    fun cashFlowTrend(): String {
+        val balance = getBalance()
+        return when {
+            balance > 1000 -> "Strong Growth"
+            balance > 0 -> "Stable"
+            else -> "Negative Flow"
+        }
     }
 }
